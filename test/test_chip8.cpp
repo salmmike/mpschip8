@@ -63,6 +63,15 @@ TEST(NAME, test_fetch)
     testOpcode(op, testdata);
 }
 
+TEST(NAME, check_font)
+{
+    Chip8CPU cpu;
+    ASSERT_TRUE(cpu.getMemory(0x050) == 0xF0) << "Value: " << cpu.getMemory(0x050)
+                                              << "Expected " << 0x050;
+    ASSERT_TRUE(cpu.getMemory(0x09F) == 0x80) << "Value: " << cpu.getMemory(0x09F)
+                                              << "Expected " << 0xF8;
+}
+
 int main(int argc, char** argv)
 {
     ::testing::InitGoogleTest(&argc, argv);

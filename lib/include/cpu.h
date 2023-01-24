@@ -31,7 +31,7 @@ class Chip8CPU
 {
 public:
 
-    Chip8CPU() {};
+    Chip8CPU();
     ~Chip8CPU() {};
 
     opcode fetch();
@@ -40,6 +40,8 @@ public:
 
     void setMemory(std::vector<uint8_t> data);
     void setPC(size_t p);
+
+    uint8_t getMemory(size_t n) { return memory[n]; };
 
 private:
     std::vector<uint8_t> memory;
