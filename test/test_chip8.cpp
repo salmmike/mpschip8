@@ -72,6 +72,16 @@ TEST(NAME, check_font)
                                               << "Expected " << 0xF8;
 }
 
+TEST(NAME, test_getByte)
+{
+    int16_t data = 0b01101010;
+    ASSERT_FALSE(getByte(0, data));
+    ASSERT_TRUE(getByte(1, data));
+    ASSERT_TRUE(getByte(2, data));
+    ASSERT_FALSE(getByte(3, data));
+    ASSERT_FALSE(getByte(7, data));
+}
+
 int main(int argc, char** argv)
 {
     ::testing::InitGoogleTest(&argc, argv);

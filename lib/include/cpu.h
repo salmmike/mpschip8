@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <stdint.h>
+#include <screen.h>
 
 struct opcode
 {
@@ -27,6 +28,9 @@ struct opcode
     };
 };
 
+
+bool getByte(uint8_t N, uint16_t sprite);
+
 class Chip8CPU
 {
 public:
@@ -45,13 +49,18 @@ public:
 
 private:
     std::vector<uint8_t> memory;
-    std::vector<int16_t> varReg;
+    std::vector<int16_t> V;
     std::vector<int16_t> stack;
 
     int16_t I {0};
     size_t pc {0};
+
     uint8_t delayTimer{0};
     uint8_t soundTimer{0};
+
+    std::unique_ptr<Chip8Screen> screen;
+
+    void display(opcode inst);
 
 };
 
