@@ -12,12 +12,23 @@ public:
 
     void create();
     void clear();
+    uint8_t flip(uint8_t x, uint8_t y);
     void draw();
-    void set(uint8_t x, uint8_t y);
+
+    void testCase();
 
 private:
+    static const size_t width {64};
+    static const size_t height {32};
+    const size_t pixelWidth {10};
+
+    bool grid[width][height] {0};
+
     std::unique_ptr<sf::RenderWindow> window;
     sf::Event event;
+
+    sf::RectangleShape createPixel(uint8_t x, uint8_t y);
+
 };
 
 #endif
