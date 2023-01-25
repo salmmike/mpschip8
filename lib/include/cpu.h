@@ -5,6 +5,7 @@
 #include <stdint.h>
 #include <screen.h>
 #include <string>
+#include <chrono>
 
 struct opcode
 {
@@ -64,7 +65,11 @@ private:
     uint8_t delayTimer{0};
     uint8_t soundTimer{0};
 
+    std::chrono::milliseconds prevTime;
+
     std::unique_ptr<Chip8Screen> screen;
+
+    std::chrono::milliseconds currentTime();
 
     void OP0(opcode inst);
     void OP1(opcode inst);

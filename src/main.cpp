@@ -2,12 +2,12 @@
 #include <cpu.h>
 #include <screen.h>
 
-int main()
+int main(int argc, char** argv)
 {
     Chip8CPU cpu;
-    //cpu.readToMemory("/home/mike/Code/chip8/IBM_logo.ch8");
-    cpu.readToMemory("/home/mike/Code/chip8/test_opcode.ch8");
-    cpu.run();
-
+    if (argc > 1) {
+        cpu.readToMemory(argv[1]);
+        cpu.run();
+    }
     return 0;
 }

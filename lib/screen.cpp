@@ -1,5 +1,7 @@
 #include <screen.h>
 #include <unistd.h>
+#include <iostream>
+#include <ios>
 
 void Chip8Screen::create()
 {
@@ -20,9 +22,12 @@ void Chip8Screen::clear()
 
 uint8_t Chip8Screen::flip(uint8_t x, uint8_t y)
 {
-    uint8_t wasOn = grid[x][y];
-    grid[x][y] ^= 1;
-    return wasOn;
+    if (x >= 0 && x < width && y >= 0 && y <= height) {
+        uint8_t wasOn = grid[x][y];
+        grid[x][y] ^= 1;
+        return wasOn;
+    }
+    return 0;
 }
 
 void Chip8Screen::draw()
@@ -55,7 +60,29 @@ void Chip8Screen::testCase()
 
 bool Chip8Screen::checkKey(uint8_t key)
 {
-    return false;
+    std::vector<sf::Keyboard::Key> keys
+    {
+        sf::Keyboard::Key::Num1,
+        sf::Keyboard::Key::Num2, sf::Keyboard::Key::Num3,
+        sf::Keyboard::Key::Num4, sf::Keyboard::Key::Q,
+        sf::Keyboard::Key::W,    sf::Keyboard::Key::E,
+        sf::Keyboard::Key::R, sf::Keyboard::Key::A,
+        sf::Keyboard::Key::S, sf::Keyboard::Key::D,
+        sf::Keyboard::Key::F, sf::Keyboard::Key::Z,
+        sf::Keyboard::Key::X, sf::Keyboard::Key::C
+    };
+
+
+    bool pressed = sf::Keyboard::isKeyPressed(keys[key]);
+    //std::cout << (int) key << " is pressed: " << pressed << "\n";
+    return pressed;
+}
+
+bool Chip8Screen::anyPress()
+{
+    std::cout << "any press\n";
+    window->pollEvent(event);
+    return (event.type == sf::Event::KeyPressed);
 }
 
 sf::RectangleShape Chip8Screen::createPixel(uint8_t x, uint8_t y)

@@ -51,7 +51,7 @@ opcode Chip8CPU::fetch()
     opcode oc;
     oc.opcode = (a << 8) | b;
 
-    std::cout << "pc: " << pc << ", op: " << std::hex << oc.opcode << "\n";
+    //std::cout << "pc: " << pc << ", op: " << std::hex << oc.opcode << "\n";
 
     pc += 2;
     return oc;
@@ -131,7 +131,15 @@ void Chip8CPU::run()
     init();
     while (true) {
         step();
-        usleep(1000 * 100);
+        usleep(1400);
+        if (currentTime() > prevTime) {
+            if (delayTimer > 0) {
+                --delayTimer;
+            }
+            if (soundTimer > 0) {
+                --soundTimer;
+            }
+        }
     }
 }
 
@@ -139,12 +147,12 @@ void Chip8CPU::init()
 {
     srandom(time(NULL));
     screen->create();
+    prevTime = currentTime();
 }
 
 void Chip8CPU::step()
 {
     opcode op = fetch();
-    std::cout << "Sleep\n";
     execute(op);
 }
 
@@ -194,6 +202,13 @@ void Chip8CPU::OP0(opcode inst)
     default:
         break;
     }
+}
+
+std::chrono::milliseconds Chip8CPU::currentTime()
+{
+    return std::chrono::duration_cast<std::chrono::milliseconds>(
+        std::chrono::system_clock::now().time_since_epoch()
+    );
 }
 
 void Chip8CPU::OP1(opcode inst)
@@ -342,7 +357,9 @@ void Chip8CPU::OPF(opcode inst)
         I += V[inst.X()];
         break;
     case 0x0A:
-        // Wait any key;
+        while (! screen->anyPress()) {
+            usleep(100);
+        }
         break;
     case 0x29:
         I = 0x050 + inst.X() * 5;

@@ -18,6 +18,7 @@ public:
     void testCase();
 
     bool checkKey(uint8_t key);
+    bool anyPress();
 
 private:
     static const size_t width {64};
