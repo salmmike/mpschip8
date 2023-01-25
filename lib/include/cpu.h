@@ -40,13 +40,14 @@ public:
     ~Chip8CPU() {};
 
     opcode fetch();
-    void decode(opcode inst);
-    //void? execute();
+    void execute(opcode inst);
 
     void setMemory(std::vector<uint8_t> data);
     void setPC(size_t p);
 
     void run();
+    void init();
+    void step();
 
     uint8_t getMemory(size_t n) { return memory[n]; };
 
@@ -54,7 +55,7 @@ public:
 
 private:
     std::vector<uint8_t> memory;
-    std::vector<uint16_t> V;
+    std::vector<uint8_t> V;
     std::vector<uint16_t> stack;
 
     int16_t I {0};
@@ -64,6 +65,24 @@ private:
     uint8_t soundTimer{0};
 
     std::unique_ptr<Chip8Screen> screen;
+
+    void OP0(opcode inst);
+    void OP1(opcode inst);
+    void OP2(opcode inst);
+    void OP3(opcode inst);
+    void OP4(opcode inst);
+    void OP5(opcode inst);
+    void OP6(opcode inst);
+    void OP7(opcode inst);
+    void OP8(opcode inst);
+    void OP9(opcode inst);
+    void OPA(opcode inst);
+    void OPB(opcode inst);
+    void OPC(opcode inst);
+    void OPD(opcode inst);
+    void OPE(opcode inst);
+    void OPF(opcode inst);
+
 
     void display(opcode inst);
     void clear(opcode inst);

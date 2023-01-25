@@ -17,6 +17,8 @@ public:
 
     void testCase();
 
+    bool checkKey(uint8_t key);
+
 private:
     static const size_t width {64};
     static const size_t height {32};

@@ -5,6 +5,7 @@ void Chip8Screen::create()
 {
     window = std::make_unique<sf::RenderWindow>(sf::VideoMode(width*pixelWidth, height*pixelWidth), "MPSChip8");
     window->setFramerateLimit(60);
+    window->clear();
 }
 
 void Chip8Screen::clear()
@@ -50,6 +51,11 @@ void Chip8Screen::testCase()
         }
     }
 
+}
+
+bool Chip8Screen::checkKey(uint8_t key)
+{
+    return false;
 }
 
 sf::RectangleShape Chip8Screen::createPixel(uint8_t x, uint8_t y)
