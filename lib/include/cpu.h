@@ -4,6 +4,7 @@
 #include <vector>
 #include <stdint.h>
 #include <screen.h>
+#include <string>
 
 struct opcode
 {
@@ -45,12 +46,16 @@ public:
     void setMemory(std::vector<uint8_t> data);
     void setPC(size_t p);
 
+    void run();
+
     uint8_t getMemory(size_t n) { return memory[n]; };
+
+    void readToMemory(std::string filename);
 
 private:
     std::vector<uint8_t> memory;
-    std::vector<int16_t> V;
-    std::vector<int16_t> stack;
+    std::vector<uint16_t> V;
+    std::vector<uint16_t> stack;
 
     int16_t I {0};
     size_t pc {0};
@@ -61,6 +66,11 @@ private:
     std::unique_ptr<Chip8Screen> screen;
 
     void display(opcode inst);
+    void clear(opcode inst);
+    void jump(opcode inst);
+    void setVX(opcode inst);
+    void addVX(opcode inst);
+    void setI(opcode inst);
 
 };
 

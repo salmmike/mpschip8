@@ -1,8 +1,12 @@
 #include <iostream>
 #include <cpu.h>
+#include <screen.h>
 
 int main()
 {
-    std::cout << "chip8\n";
+    Chip8CPU cpu;
+    cpu.readToMemory("/home/mike/Code/chip8/IBM_logo.ch8");
+    cpu.run();
+
     return 0;
 }
