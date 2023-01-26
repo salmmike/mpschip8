@@ -51,7 +51,7 @@ opcode Chip8CPU::fetch()
     opcode oc;
     oc.opcode = (a << 8) | b;
 
-    //std::cout << "pc: " << pc << ", op: " << std::hex << oc.opcode << "\n";
+    std::cout << "pc: " << pc << ", op: " << std::hex << oc.opcode << "\n";
 
     pc += 2;
     return oc;
@@ -131,8 +131,8 @@ void Chip8CPU::run()
     init();
     while (true) {
         step();
-        usleep(1400);
-        if (currentTime() > prevTime) {
+        usleep(2000);
+        if (currentTime() > (prevTime + std::chrono::milliseconds(16))) {
             if (delayTimer > 0) {
                 --delayTimer;
             }
@@ -274,14 +274,15 @@ void Chip8CPU::OP8(opcode inst)
         V[inst.X()] += V[inst.Y()];
         break;
     case 5:
+        V[0xF] = (V[inst.X()] > V[inst.Y()]) ? 1 : 0;
         V[inst.X()] -= V[inst.Y()];
         break;
-
     case 6:
         V[0xF] = (V[inst.Y()] & 0b00000001) ? 1 : 0;
         V[inst.X()] = (V[inst.Y()] >> 1);
         break;
     case 7:
+        V[0xF] = (V[inst.Y()] > V[inst.X()]) ? 1 : 0;
         V[inst.X()] = V[inst.Y()] - V[inst.X()];
         break;
     case 0xE:
@@ -342,6 +343,7 @@ void Chip8CPU::OPE(opcode inst)
 
 void Chip8CPU::OPF(opcode inst)
 {
+    int key = -1;
     switch (inst.NN())
     {
     case 0x07:
@@ -357,9 +359,13 @@ void Chip8CPU::OPF(opcode inst)
         I += V[inst.X()];
         break;
     case 0x0A:
-        while (! screen->anyPress()) {
-            usleep(100);
+        key = screen->anyPress();
+        if (key >= 0) {
+            V[inst.X()] = key;
+        } else {
+            pc -= 2;
         }
+
         break;
     case 0x29:
         I = 0x050 + inst.X() * 5;

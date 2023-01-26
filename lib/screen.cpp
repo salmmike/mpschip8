@@ -60,29 +60,22 @@ void Chip8Screen::testCase()
 
 bool Chip8Screen::checkKey(uint8_t key)
 {
-    std::vector<sf::Keyboard::Key> keys
-    {
-        sf::Keyboard::Key::Num1,
-        sf::Keyboard::Key::Num2, sf::Keyboard::Key::Num3,
-        sf::Keyboard::Key::Num4, sf::Keyboard::Key::Q,
-        sf::Keyboard::Key::W,    sf::Keyboard::Key::E,
-        sf::Keyboard::Key::R, sf::Keyboard::Key::A,
-        sf::Keyboard::Key::S, sf::Keyboard::Key::D,
-        sf::Keyboard::Key::F, sf::Keyboard::Key::Z,
-        sf::Keyboard::Key::X, sf::Keyboard::Key::C
-    };
-
-
     bool pressed = sf::Keyboard::isKeyPressed(keys[key]);
-    //std::cout << (int) key << " is pressed: " << pressed << "\n";
+    std::cout << (int) key << " is pressed: " << pressed << "\n";
     return pressed;
 }
 
-bool Chip8Screen::anyPress()
+int Chip8Screen::anyPress()
 {
     std::cout << "any press\n";
     window->pollEvent(event);
-    return (event.type == sf::Event::KeyPressed);
+    if (event.type == sf::Event::KeyReleased) {
+        auto it = std::find(keys.begin(), keys.end(), event.key.code);
+        if (it != keys.end()) {
+            return std::distance(keys.begin(), it);
+        }
+    }
+    return -1;
 }
 
 sf::RectangleShape Chip8Screen::createPixel(uint8_t x, uint8_t y)

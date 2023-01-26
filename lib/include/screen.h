@@ -18,7 +18,7 @@ public:
     void testCase();
 
     bool checkKey(uint8_t key);
-    bool anyPress();
+    int anyPress();
 
 private:
     static const size_t width {64};
@@ -31,6 +31,18 @@ private:
     sf::Event event;
 
     sf::RectangleShape createPixel(uint8_t x, uint8_t y);
+
+    const std::vector<sf::Keyboard::Key> keys
+    {
+        sf::Keyboard::Key::Num1,
+        sf::Keyboard::Key::Num2, sf::Keyboard::Key::Num3,
+        sf::Keyboard::Key::Num4, sf::Keyboard::Key::Q,
+        sf::Keyboard::Key::W,    sf::Keyboard::Key::E,
+        sf::Keyboard::Key::R, sf::Keyboard::Key::A,
+        sf::Keyboard::Key::S, sf::Keyboard::Key::D,
+        sf::Keyboard::Key::F, sf::Keyboard::Key::Z,
+        sf::Keyboard::Key::X, sf::Keyboard::Key::C
+    };
 
 };
 
