@@ -88,14 +88,7 @@ private:
     void OPE(opcode inst);
     void OPF(opcode inst);
 
-
     void display(opcode inst);
-    void clear(opcode inst);
-    void jump(opcode inst);
-    void setVX(opcode inst);
-    void addVX(opcode inst);
-    void setI(opcode inst);
-
 };
 
 #endif

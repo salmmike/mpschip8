@@ -34,14 +34,39 @@ private:
 
     const std::vector<sf::Keyboard::Key> keys
     {
-        sf::Keyboard::Key::Num1,
-        sf::Keyboard::Key::Num2, sf::Keyboard::Key::Num3,
-        sf::Keyboard::Key::Num4, sf::Keyboard::Key::Q,
-        sf::Keyboard::Key::W,    sf::Keyboard::Key::E,
-        sf::Keyboard::Key::R, sf::Keyboard::Key::A,
-        sf::Keyboard::Key::S, sf::Keyboard::Key::D,
-        sf::Keyboard::Key::F, sf::Keyboard::Key::Z,
-        sf::Keyboard::Key::X, sf::Keyboard::Key::C
+        /*
+            1, 2, 3, C
+            4, 5, 6, D
+            7, 8, 9, E
+            A, 0, B, F
+
+            1,  2,  3, 12
+            4,  5,  6, 13
+            7,  8,  9, 14
+            10, 0, 11, 15
+
+            1, 2, 3, 4,
+            Q, W, E, R
+            A, S, D, F
+            Z, X, C, V
+        */
+
+        sf::Keyboard::Key::X,       // 0
+        sf::Keyboard::Key::Num1,    // 1
+        sf::Keyboard::Key::Num2,    // 2
+        sf::Keyboard::Key::Num3,    // 3
+        sf::Keyboard::Key::Q,       // 4
+        sf::Keyboard::Key::W,       // 5
+        sf::Keyboard::Key::E,       // 6
+        sf::Keyboard::Key::A,       // 7
+        sf::Keyboard::Key::S,       // 8
+        sf::Keyboard::Key::D,       // 9
+        sf::Keyboard::Key::Z,       // 10
+        sf::Keyboard::Key::C,       // 11
+        sf::Keyboard::Key::Num4,    // 12
+        sf::Keyboard::Key::R,       // 13
+        sf::Keyboard::Key::F,       // 14
+        sf::Keyboard::Key::V        // 15
     };
 
 };

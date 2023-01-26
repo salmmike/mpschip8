@@ -194,7 +194,7 @@ void Chip8CPU::OP0(opcode inst)
     switch (inst.NNN())
     {
     case 0x0E0:
-        clear(inst);
+        screen->clear();
         break;
     case 0x0EE:
         pc = stack.back();
@@ -213,7 +213,7 @@ std::chrono::milliseconds Chip8CPU::currentTime()
 
 void Chip8CPU::OP1(opcode inst)
 {
-    jump(inst);
+    pc = inst.NNN();
 }
 
 void Chip8CPU::OP2(opcode inst)
@@ -245,12 +245,12 @@ void Chip8CPU::OP5(opcode inst)
 
 void Chip8CPU::OP6(opcode inst)
 {
-    setVX(inst);
+    V[inst.X()] = inst.NN();
 }
 
 void Chip8CPU::OP7(opcode inst)
 {
-    addVX(inst);
+    V[inst.X()] += inst.NN();
 }
 
 void Chip8CPU::OP8(opcode inst)
@@ -304,7 +304,7 @@ void Chip8CPU::OP9(opcode inst)
 
 void Chip8CPU::OPA(opcode inst)
 {
-    setI(inst);
+    I = inst.NNN();
 }
 
 void Chip8CPU::OPB(opcode inst)
@@ -327,12 +327,12 @@ void Chip8CPU::OPE(opcode inst)
     switch (inst.NN())
     {
     case 0x9E:
-        if (screen->checkKey(inst.X())) {
+        if ( screen->checkKey(V[inst.X()]) ) {
             pc += 2;
         }
         break;
     case 0xA1:
-        if (!screen->checkKey(inst.X())) {
+        if ( !screen->checkKey(V[inst.X()]) ) {
             pc += 2;
         }
         break;
@@ -365,7 +365,6 @@ void Chip8CPU::OPF(opcode inst)
         } else {
             pc -= 2;
         }
-
         break;
     case 0x29:
         I = 0x050 + inst.X() * 5;
@@ -388,31 +387,6 @@ void Chip8CPU::OPF(opcode inst)
     default:
         break;
     }
-}
-
-void Chip8CPU::setVX(opcode inst)
-{
-    V[inst.X()] = inst.NN();
-}
-
-void Chip8CPU::addVX(opcode inst)
-{
-    V[inst.X()] += inst.NN();
-}
-
-void Chip8CPU::setI(opcode inst)
-{
-    I = inst.NNN();
-}
-
-void Chip8CPU::jump(opcode inst)
-{
-    pc = inst.NNN();
-}
-
-void Chip8CPU::clear(opcode inst)
-{
-    screen->clear();
 }
 
 bool getByte(uint8_t N, uint16_t sprite)
